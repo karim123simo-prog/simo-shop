@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>متجرنا | اطلب الآن والدفع عند الاستلام</title>
+  <meta name="description" content="منتجات عالية الجودة، توصيل سريع لجميع المدن والدفع عند الاستلام." />
+
+  <!-- Tailwind CSS (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Arabic-friendly font -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+  <script>
+    // Tailwind theme extension: brand palette
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Cairo', 'sans-serif'] },
+          colors: {
+            brand: { 50:'#eef2ff', 100:'#e0e7ff',500:'#6366f1', 600:'#4f46e5', 700:'#4338ca', 900:'#1e1b4b' },
+            accent: { 500:'#f59e0b', 600:'#d97706' }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Cairo', sans-serif; }
+    /* Soft animated gradient for the hero */
+    .hero-bg { background: linear-gradient(135deg, #1e1b4b 0%, #4338ca 55%, #6366f1 100%); }
+    /* Small pop animation when the cart changes */
+    @keyframes pop { 0%{transform:scale(1)} 50%{transform:scale(1.25)} 100%{transform:scale(1)} }
+    .pop { animation: pop .3s ease; }
+    /* Slide-up for the mobile cart drawer */
+    .drawer { transition: transform .3s ease; }
+  </style>
+</head>
+
+<body class="bg-slate-50 text-slate-800 antialiased">
+
+  <!-- ============================== HEADER ============================== -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-slate-200">
+    <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+      <a href="#" class="text-2xl font-extrabold text-brand-700">متجري<span class="text-accent-500">.</span></a>
+
+      <nav class="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-600">
+        <a href="#products" class="hover:text-brand-600">المنتجات</a>
+        <a href="#features" class="hover:text-brand-600">لماذا نحن</a>
+        <a href="#order" class="hover:text-brand-600">اطلب الآن</a>
+        <a href="#contact" class="hover:text-brand-600">اتصل بنا</a>
+      </nav>
+
+      <!-- Cart button (opens drawer on mobile, scrolls to summary on desktop) -->
+      <button id="cartBtn" class="relative flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-full text-sm font-bold transition">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.3 2.3a1 1 0 00.7 1.7H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+        السلة
+        <span id="cartCount" class="bg-accent-500 text-slate-900 text-xs font-extrabold rounded-full min-w-[22px] h-[22px] px-1 flex items-center justify-center">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ============================== HERO ============================== -->
+  <section class="hero-bg text-white">
+    <div class="max-w-6xl mx-auto px-4 py-16 md:py-24 grid md:grid-cols-2 gap-10 items-center">
+      <div>
+        <span class="inline-block bg-white/15 text-sm font-semibold px-4 py-1 rounded-full mb-4">🔥 عرض لفترة محدودة — الشحن مجاني فوق 300 درهم</span>
+        <h1 class="text-4xl md:text-5xl font-extrabold leading-tight mb-4">
+          جودة عالية، وسعر مناسب،<br /><span class="text-accent-500">وتوصيل لباب بيتك</span>
+        </h1>
+        <p class="text-lg text-indigo-100 mb-8 leading-relaxed">
+          اختر منتجك، املأ معلوماتك في ثوانٍ، وادفع عند الاستلام. بدون مخاطرة وبدون تعقيد.
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <a href="#products" class="bg-accent-500 hover:bg-accent-600 text-slate-900 font-extrabold px-8 py-3 rounded-full shadow-lg transition">تسوق الآن</a>
+          <a href="#order" class="bg-white/10 hover:bg-white/20 border border-white/30 font-bold px-8 py-3 rounded-full transition">اطلب مباشرة</a>
+        </div>
+        <ul class="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-indigo-100">
+          <li>✔ الدفع عند الاستلام</li>
+          <li>✔ توصيل 24-48 ساعة</li>
+          <li>✔ ضمان الاسترجاع</li>
+        </ul>
+      </div>
+
+      <!-- Hero visual (pure CSS/emoji so no external image is needed; replace with <img>) -->
+      <div class="flex justify-center">
+        <div class="relative w-72 h-72 md:w-96 md:h-96 rounded-[2.5rem] bg-white/10 border border-white/20 flex items-center justify-center text-[8rem] md:text-[10rem] shadow-2xl">
+          🛍️
+          <span class="absolute -top-3 -left-3 bg-accent-500 text-slate-900 font-extrabold rounded-full w-20 h-20 flex items-center justify-center rotate-[-12deg] shadow-lg text-center leading-tight text-sm">خصم<br />25%</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== FEATURES ============================== -->
+  <section id="features" class="max-w-6xl mx-auto px-4 py-14">
+    <h2 class="text-3xl font-extrabold text-center mb-10">لماذا تختارنا؟</h2>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div class="bg-white rounded-2xl p-6 shadow-sm text-center"><div class="text-4xl mb-3">🚚</div><h3 class="font-bold mb-1">توصيل سريع</h3><p class="text-sm text-slate-500">لجميع مدن المغرب خلال 24-48 ساعة.</p></div>
+      <div class="bg-white rounded-2xl p-6 shadow-sm text-center"><div class="text-4xl mb-3">💵</div><h3 class="font-bold mb-1">الدفع عند الاستلام</h3><p class="text-sm text-slate-500">تفحّص طلبك ثم ادفع للموزع.</p></div>
+      <div class="bg-white rounded-2xl p-6 shadow-sm text-center"><div class="text-4xl mb-3">⭐</div><h3 class="font-bold mb-1">جودة مضمونة</h3><p class="text-sm text-slate-500">منتجات مختارة بعناية وبمواصفات عالية.</p></div>
+      <div class="bg-white rounded-2xl p-6 shadow-sm text-center"><div class="text-4xl mb-3">💬</div><h3 class="font-bold mb-1">دعم على واتساب</h3><p class="text-sm text-slate-500">فريقنا يرد عليك بسرعة طوال اليوم.</p></div>
+    </div>
+  </section>
+
+  <!-- ============================== PRODUCTS ============================== -->
+  <section id="products" class="bg-white py-14">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-3xl font-extrabold text-center mb-2">منتجاتنا</h2>
+      <p class="text-center text-slate-500 mb-10">أضف ما يعجبك إلى السلة ثم أكمل الطلب</p>
+      <!-- Cards are rendered by JavaScript from the PRODUCTS array below -->
+      <div id="productGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </div>
+  </section>
+
+  <!-- ============================== ORDER SECTION ============================== -->
+  <section id="order" class="max-w-6xl mx-auto px-4 py-14">
+    <h2 class="text-3xl font-extrabold text-center mb-2">أكمل طلبك</h2>
+    <p class="text-center text-slate-500 mb-10">املأ المعلومات التالية وسنتصل بك لتأكيد الطلب</p>
+
+    <div class="grid lg:grid-cols-5 gap-8 items-start">
+
+      <!-- ---------- ORDER FORM ---------- -->
+      <form id="orderForm" class="lg:col-span-3 bg-white rounded-2xl shadow-md p-6 md:p-8 space-y-5" novalidate>
+        <div>
+          <label for="fullName" class="block font-bold mb-1">الاسم الكامل</label>
+          <input id="fullName" name="fullName" type="text" autocomplete="name" placeholder="مثال: محمد العلوي"
+                 class="w-full border border-slate-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-500" />
+          <p class="err hidden text-red-600 text-sm mt-1" data-for="fullName">المرجو إدخال الاسم الكامل.</p>
+        </div>
+
+        <div>
+          <label for="phone" class="block font-bold mb-1">رقم الهاتف</label>
+          <input id="phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel" dir="ltr" placeholder="06XXXXXXXX"
+                 class="w-full border border-slate-300 rounded-xl px-4 py-3 text-right focus:outline-none focus:ring-2 focus:ring-brand-500" />
+          <p class="err hidden text-red-600 text-sm mt-1" data-for="phone">أدخل رقماً مغربياً صحيحاً (مثال: 0612345678).</p>
+        </div>
+
+        <div>
+          <label for="city" class="block font-bold mb-1">المدينة</label>
+          <input id="city" name="city" type="text" autocomplete="address-level2" placeholder="مثال: الدار البيضاء"
+                 class="w-full border border-slate-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-500" />
+          <p class="err hidden text-red-600 text-sm mt-1" data-for="city">المرجو إدخال المدينة.</p>
+        </div>
+
+        <p id="cartErr" class="hidden text-red-600 text-sm font-semibold">⚠️ السلة فارغة، أضف منتجاً واحداً على الأقل.</p>
+
+        <button type="submit" class="w-full bg-accent-500 hover:bg-accent-600 text-slate-900 font-extrabold text-lg py-4 rounded-xl shadow-lg transition">
+          اطلب الآن — الدفع عند الاستلام
+        </button>
+        <p class="text-xs text-slate-500 text-center">بالضغط على الزر سيتم فتح واتساب برسالة طلبك جاهزة للإرسال إلينا.</p>
+      </form>
+
+      <!-- ---------- DESKTOP ORDER SUMMARY (sticky) ---------- -->
+      <aside class="lg:col-span-2 lg:sticky lg:top-24">
+        <div class="bg-white rounded-2xl shadow-md p-6 border-t-4 border-brand-600">
+          <h3 class="text-xl font-extrabold mb-4">🧾 ملخص الطلب</h3>
+          <div data-cart-items class="space-y-3"></div>
+          <div data-cart-totals class="mt-4"></div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============================== FOOTER / CONTACT ============================== -->
+  <footer id="contact" class="bg-brand-900 text-indigo-100">
+    <div class="max-w-6xl mx-auto px-4 py-12 grid md:grid-cols-3 gap-8">
+      <div>
+        <div class="text-2xl font-extrabold text-white mb-2">متجري<span class="text-accent-500">.</span></div>
+        <p class="text-sm leading-relaxed">متجر إلكتروني يضمن لك الجودة والتوصيل السريع والدفع عند الاستلام.</p>
+      </div>
+      <div>
+        <h4 class="font-bold text-white mb-3">تواصل معنا</h4>
+        <ul class="space-y-2 text-sm">
+          <li>✉️ <a class="hover:text-white underline" href="mailto:sikomimo399@gmail.com">sikomimo399@gmail.com</a></li>
+          <li>📱 واتساب: <a class="hover:text-white underline" dir="ltr" href="https://wa.me/212600203781" target="_blank" rel="noopener">0600203781</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-bold text-white mb-3">روابط سريعة</h4>
+        <ul class="space-y-2 text-sm">
+          <li><a class="hover:text-white" href="#products">المنتجات</a></li>
+          <li><a class="hover:text-white" href="#order">اطلب الآن</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-white/10 text-center text-xs py-4">© <span id="year"></span> متجري. جميع الحقوق محفوظة.</div>
+  </footer>
+
+  <!-- ============================== MOBILE CART DRAWER ============================== -->
+  <div id="overlay" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
+  <div id="drawer" class="drawer fixed bottom-0 inset-x-0 z-50 bg-white rounded-t-3xl shadow-2xl max-h-[85vh] overflow-y-auto translate-y-full">
+    <div class="p-5">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-xl font-extrabold">🛒 سلة المشتريات</h3>
+        <button id="closeDrawer" class="text-2xl leading-none text-slate-400 hover:text-slate-700" aria-label="إغلاق">&times;</button>
+      </div>
+      <div data-cart-items class="space-y-3"></div>
+      <div data-cart-totals class="mt-4"></div>
+      <a href="#order" id="drawerCheckout" class="block text-center mt-4 bg-accent-500 hover:bg-accent-600 text-slate-900 font-extrabold py-3 rounded-xl">متابعة الطلب</a>
+    </div>
+  </div>
+
+  <!-- ============================== FLOATING WHATSAPP BUTTON ============================== -->
+  <a href="https://wa.me/212600203781?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%D8%8C%20%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1"
+     target="_blank" rel="noopener" aria-label="WhatsApp"
+     class="fixed bottom-5 left-5 z-30 bg-green-500 hover:bg-green-600 text-white w-14 h-14 rounded-full shadow-xl flex items-center justify-center transition hover:scale-110">
+    <svg viewBox="0 0 32 32" class="w-8 h-8" fill="currentColor"><path d="M16 3C9 3 3.3 8.6 3.3 15.5c0 2.4.7 4.7 1.9 6.6L3 29l7.1-2.1c1.8 1 3.8 1.5 5.9 1.5 7 0 12.7-5.6 12.7-12.5S23 3 16 3zm0 22.9c-1.9 0-3.7-.5-5.300-1.500l-.4-.2-4.200 1.200 1.300-4-.3-.4c-1.100-1.700-1.700-3.600-1.700-5.600C5.400 9.800 10.100 5.200 16 5.200s10.600 4.600 10.600 10.300S21.900 25.900 16 25.900zm5.800-7.700c-.3-.2-1.900-.9-2.200-1-.3-.1-.5-.2-.7.200s-.8 1-1 1.200c-.2.200-.4.200-.7.100-.3-.2-1.400-.5-2.600-1.600-1-.9-1.600-1.900-1.800-2.200-.2-.3 0-.5.100-.7l.5-.5c.2-.2.200-.3.300-.5.100-.2.100-.4 0-.5-.1-.2-.7-1.700-1-2.300-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.5.100-.8.400-.3.300-1 1-1 2.500s1.100 2.900 1.200 3.100c.2.200 2.100 3.300 5.200 4.500 3.100 1.200 3.100.8 3.600.8.600-.1 1.900-.8 2.100-1.500.3-.7.300-1.300.2-1.500-.1-.1-.3-.2-.6-.4z"/></svg>
+  </a>
+
+  <!-- ============================== TOAST ============================== -->
+  <div id="toast" class="fixed top-20 inset-x-0 z-50 flex justify-center pointer-events-none opacity-0 transition-opacity duration-300">
+    <div class="bg-slate-900 text-white text-sm font-semibold px-5 py-3 rounded-full shadow-xl"></div>
+  </div>
+
+  <!-- ============================== JAVASCRIPT ============================== -->
+  <script>
+    /* ==========================================================
+       1) CONFIG — edit these values to customize the store
+       ========================================================== */
+    const CONFIG = {
+      whatsapp: '212600203781',        // WhatsApp number (international format, no +)
+      currency: 'درهم',                // Currency label
+      shipping: 30,                    // Flat shipping fee
+      freeShippingFrom: 300            // Free shipping above this subtotal
+    };
+
+    // Products list — replace names, prices, emojis (or add an `image` URL) with your own
+    const PRODUCTS = [
+      { id: 1, name: 'المنتج الأول',  desc: 'وصف قصير ومقنع للمنتج الأول وأهم مميزاته.',  price: 150, oldPrice: 200, emoji: '👟' },
+      { id: 2, name: 'المنتج الثاني', desc: 'وصف قصير ومقنع للمنتج الثاني وأهم مميزاته.', price: 220, oldPrice: 290, emoji: '🎒' },
+      { id: 3, name: 'المنتج الثالث', desc: 'وصف قصير ومقنع للمنتج الثالث وأهم مميزاته.', price: 99,  oldPrice: 130, emoji: '⌚' }
+    ];
+
+    /* ==========================================================
+       2) STATE — cart is { productId: quantity }, saved in localStorage
+       ========================================================== */
+    let cart = {};
+    try { cart = JSON.parse(localStorage.getItem('cart') || '{}'); } catch (e) { cart = {}; }
+    const saveCart = () => { try { localStorage.setItem('cart', JSON.stringify(cart)); } catch (e) {} };
+
+    const $  = (s, r = document) => r.querySelector(s);
+    const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+    const fmt = n => `${n} ${CONFIG.currency}`;
+
+    /* ==========================================================
+       3) PRODUCT GRID
+       ========================================================== */
+    function renderProducts() {
+      $('#productGrid').innerHTML = PRODUCTS.map(p => `
+        <article class="bg-slate-50 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition flex flex-col">
+          <div class="h-48 bg-gradient-to-br from-brand-100 to-brand-50 flex items-center justify-center text-7xl relative">
+            ${p.image ? `<img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover" />` : p.emoji}
+            <span class="absolute top-3 right-3 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full">
+              -${Math.round((1 - p.price / p.oldPrice) * 100)}%
+            </span>
+          </div>
+          <div class="p-5 flex flex-col flex-1">
+            <h3 class="text-lg font-extrabold mb-1">${p.name}</h3>
+            <p class="text-sm text-slate-500 mb-3 flex-1">${p.desc}</p>
+            <div class="flex items-baseline gap-2 mb-4">
+              <span class="text-2xl font-extrabold text-brand-700">${fmt(p.price)}</span>
+              <span class="text-sm text-slate-400 line-through">${fmt(p.oldPrice)}</span>
+            </div>
+            <button data-add="${p.id}" class="bg-brand-600 hover:bg-brand-700 text-white font-bold py-2.5 rounded-xl transition">
+              + أضف إلى السلة
+            </button>
+          </div>
+        </article>`).join('');
+    }
+
+    /* ==========================================================
+       4) CART LOGIC
+       ========================================================== */
+    function changeQty(id, delta) {
+      cart[id] = (cart[id] || 0) + delta;
+      if (cart[id] <= 0) delete cart[id];
+      saveCart();
+      renderCart();
+    }
+
+    function cartTotals() {
+      const subtotal = Object.entries(cart).reduce((sum, [id, q]) => {
+        const p = PRODUCTS.find(x => x.id == id);
+        return sum + (p ? p.price * q : 0);
+      }, 0);
+      const count = Object.values(cart).reduce((a, b) => a + b, 0);
+      const shipping = count === 0 ? 0 : (subtotal >= CONFIG.freeShippingFrom ? 0 : CONFIG.shipping);
+      return { subtotal, shipping, total: subtotal + shipping, count };
+    }
+
+    // Renders the cart in BOTH the desktop summary box and the mobile drawer
+    function renderCart() {
+      const { subtotal, shipping, total, count } = cartTotals();
+
+      // Items list
+      const itemsHTML = count === 0
+        ? `<p class="text-slate-400 text-center py-6">🛒 السلة فارغة</p>`
+        : Object.entries(cart).map(([id, q]) => {
+            const p = PRODUCTS.find(x => x.id == id);
+            return `
+            <div class="flex items-center gap-3 bg-slate-50 rounded-xl p-3">
+              <div class="w-12 h-12 rounded-lg bg-brand-100 flex items-center justify-center text-2xl">${p.emoji}</div>
+              <div class="flex-1 min-w-0">
+                <div class="font-bold text-sm truncate">${p.name}</div>
+                <div class="text-xs text-slate-500">${fmt(p.price)} × ${q}</div>
+              </div>
+              <div class="flex items-center gap-2">
+                <button data-qty="${id}" data-d="-1" class="w-7 h-7 rounded-full bg-white border border-slate-300 font-bold hover:bg-slate-100">−</button>
+                <span class="w-5 text-center font-bold text-sm">${q}</span>
+                <button data-qty="${id}" data-d="1" class="w-7 h-7 rounded-full bg-white border border-slate-300 font-bold hover:bg-slate-100">+</button>
+              </div>
+            </div>`;
+          }).join('');
+
+      // Price breakdown
+      const totalsHTML = count === 0 ? '' : `
+        <div class="border-t border-slate-200 pt-4 space-y-2 text-sm">
+          <div class="flex justify-between"><span class="text-slate-500">المجموع الفرعي</span><span class="font-semibold">${fmt(subtotal)}</span></div>
+          <div class="flex justify-between"><span class="text-slate-500">التوصيل</span>
+            <span class="font-semibold ${shipping === 0 ? 'text-green-600' : ''}">${shipping === 0 ? 'مجاني' : fmt(shipping)}</span></div>
+          ${shipping > 0 ? `<p class="text-xs text-accent-600">أضف ${fmt(CONFIG.freeShippingFrom - subtotal)} للحصول على توصيل مجاني 🎁</p>` : ''}
+          <div class="flex justify-between text-lg font-extrabold pt-2 border-t border-dashed border-slate-300">
+            <span>الإجمالي</span><span class="text-brand-700">${fmt(total)}</span></div>
+          <p class="text-xs text-slate-500">💵 الدفع عند الاستلام</p>
+        </div>`;
+
+      $$('[data-cart-items]').forEach(el => el.innerHTML = itemsHTML);
+      $$('[data-cart-totals]').forEach(el => el.innerHTML = totalsHTML);
+
+      const badge = $('#cartCount');
+      badge.textContent = count;
+      badge.classList.remove('pop'); void badge.offsetWidth; badge.classList.add('pop');
+    }
+
+    /* ==========================================================
+       5) UI HELPERS (toast + drawer)
+       ========================================================== */
+    function toast(msg) {
+      const t = $('#toast');
+      t.firstElementChild.textContent = msg;
+      t.classList.remove('opacity-0');
+      clearTimeout(toast._t);
+      toast._t = setTimeout(() => t.classList.add('opacity-0'), 1800);
+    }
+    const openDrawer  = () => { $('#overlay').classList.remove('hidden'); $('#drawer').classList.remove('translate-y-full'); };
+    const closeDrawer = () => { $('#overlay').classList.add('hidden');    $('#drawer').classList.add('translate-y-full'); };
+
+    /* ==========================================================
+       6) EVENTS
+       ========================================================== */
+    document.addEventListener('click', e => {
+      const add = e.target.closest('[data-add]');
+      if (add) { changeQty(add.dataset.add, 1); toast('✅ تمت الإضافة إلى السلة'); return; }
+
+      const qty = e.target.closest('[data-qty]');
+      if (qty) { changeQty(qty.dataset.qty, parseInt(qty.dataset.d, 10)); }
+    });
+
+    // Cart button: drawer on small screens, scroll to summary on large screens
+    $('#cartBtn').addEventListener('click', () => {
+      if (window.innerWidth < 1024) openDrawer();
+      else $('#order').scrollIntoView({ behavior: 'smooth' });
+    });
+    $('#closeDrawer').addEventListener('click', closeDrawer);
+    $('#overlay').addEventListener('click', closeDrawer);
+    $('#drawerCheckout').addEventListener('click', closeDrawer);
+
+    /* ==========================================================
+       7) FORM VALIDATION + SUBMIT (sends the order via WhatsApp)
+       ========================================================== */
+    const phoneOk = v => /^(0|\+212|00212)[5-7]\d{8}$/.test(v.replace(/[\s.-]/g, ''));
+
+    function showErr(field, show) {
+      $(`.err[data-for="${field}"]`).classList.toggle('hidden', !show);
+      $('#' + field).classList.toggle('border-red-500', show);
+    }
+
+    $('#orderForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const name  = $('#fullName').value.trim();
+      const phone = $('#phone').value.trim();
+      const city  = $('#city').value.trim();
+      const { subtotal, shipping, total, count } = cartTotals();
+
+      const okName = name.length >= 3, okPhone = phoneOk(phone), okCity = city.length >= 2, okCart = count > 0;
+      showErr('fullName', !okName); showErr('phone', !okPhone); showErr('city', !okCity);
+      $('#cartErr').classList.toggle('hidden', okCart);
+      if (!(okName && okPhone && okCity && okCart)) return;
+
+      // Build the WhatsApp message
+      const lines = Object.entries(cart).map(([id, q]) => {
+        const p = PRODUCTS.find(x => x.id == id);
+        return `• ${p.name} × ${q} = ${fmt(p.price * q)}`;
+      });
+      const message =
+        `🛒 *طلب جديد*\n\n` +
+        `👤 الاسم: ${name}\n📞 الهاتف: ${phone}\n🏙️ المدينة: ${city}\n\n` +
+        `*المنتجات:*\n${lines.join('\n')}\n\n` +
+        `المجموع الفرعي: ${fmt(subtotal)}\n` +
+        `التوصيل: ${shipping === 0 ? 'مجاني' : fmt(shipping)}\n` +
+        `*الإجمالي: ${fmt(total)}* (الدفع عند الاستلام)`;
+
+      window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(message)}`, '_blank');
+
+      // Reset after sending
+      cart = {}; saveCart(); renderCart();
+      e.target.reset();
+      toast('🎉 شكراً! تم تجهيز طلبك على واتساب');
+    });
+
+    /* ==========================================================
+       8) INIT
+       ========================================================== */
+    $('#year').textContent = new Date().getFullYear();
+    renderProducts();
+    renderCart();
+  </script>
+</body>
+</html>
